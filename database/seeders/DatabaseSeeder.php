@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
 
-        $this->call(QuizSeeder::class);
+        $this->call([
+            QuizSeeder::class,
+            PollSeeder::class
+        ]);
     }
 }

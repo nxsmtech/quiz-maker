@@ -12,6 +12,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -21,7 +22,7 @@ class QuizResource extends Resource
 {
     protected static ?string $model = Quiz::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     public static function form(Form $form): Form
     {
@@ -39,7 +40,8 @@ class QuizResource extends Resource
                                     </div>'
                                 );
                             }),
-                    ]),
+                    ])
+                    ->hidden(fn ($livewire) => $livewire instanceof CreateRecord),
 
                 Section::make('Quiz Details')
                     ->schema([
@@ -90,6 +92,11 @@ class QuizResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Quizzes';
     }
 
     public static function getPages(): array
