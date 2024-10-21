@@ -1,27 +1,31 @@
-<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-xl font-bold">{{ $poll->title }}</h2>
-    <p class="text-gray-600 mb-4">{{ $poll->description }}</p>
+<div class="p-4 shadow-lg bg-cover bg-top font-montserrat overflow-y-hidden"
+     style="background-image: url('{{ asset('storage/' . $poll->background_image) }}'); background-color: {{ $poll->background_color }}; color: {{ $poll->text_color }};">
+
+    {{--    @dd($poll)--}}
+    <div class="flex flex gap-3 items-center">
+        <h1 class="text-xl font-bold">{{ $poll->title }}</h1>
+        @if($poll->logo)
+            <img src="{{ asset('storage/' . $poll->logo) }}" alt="Poll Logo" class="w-6 h-6 object-contain">
+        @endif
+    </div>
+    <p class="mb-2">{{ $poll->description }}</p>
 
     @if (!$voted)
-        <div class="space-y-2">
+        <div class="grid grid-cols-1 gap-2">
+            <h2 class="text-md font-bold">{{ $poll->question }}</h2>
             @foreach($poll->options as $option)
                 <div>
                     <input type="radio" wire:click="selectOption({{ $option->id }})" name="option" class="mr-2">
-                    <label>{{ $option->option_text }}</label>
+                    <label class="font-semibold text-sm">{{ $option->option_text }}</label>
                 </div>
             @endforeach
         </div>
-
-        @if ($selectedOption)
-            <button wire:click="vote" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-                Vote
-            </button>
-        @endif
     @else
-        <h3 class="text-lg font-bold">Results:</h3>
-        <div class="space-y-2 mt-4">
+        <h3 class="mt-2 text-md font-semibold">{{ $poll->results_title }}</h3>
+        <p class="mt-2 text-sm">{{ $poll->results_summary }}</p>
+        <div class="space-y-2 mt-2">
             @foreach($poll->options as $option)
-                <div class="flex justify-between">
+                <div class="flex justify-between text-sm">
                     <span>{{ $option->option_text }}</span>
                     @if($option->votes)
                         <span>{{ round(($option->votes / $totalVotes) * 100, 2) }}%</span>
@@ -32,4 +36,13 @@
             @endforeach
         </div>
     @endif
+    <div class="flex flex-row grid grid-cols-2 items-center gap-4 mt-4">
+        <p class="text-xs font-light">total votes: {{ $totalVotes }}</p>
+        @if(!$voted)
+            <button wire:click="vote" class="mt-2 px-1 py-1 rounded w-full text-sm font-semibold"
+                    style="background-color: {{ $poll->button_color }}; color: {{ $poll->button_text_color }};">
+                {{ $poll->button_text }}
+            </button>
+        @endif
+    </div>
 </div>

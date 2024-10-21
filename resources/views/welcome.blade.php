@@ -55,6 +55,11 @@
                     </header>
 
                     <main class="mt-6">
+                        <div style="width:300px; height:300px">
+                            <div style="position:relative; width:100%; height:100%;">
+                                <iframe src="http://local.quiz.lv/poll/1" style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
                         <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
                             <a
                                 href="https://laravel.com/docs"
