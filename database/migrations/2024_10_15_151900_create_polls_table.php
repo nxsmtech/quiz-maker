@@ -18,11 +18,12 @@ return new class extends Migration
             $table->text('question');
             $table->string('background_color')->nullable();
             $table->string('text_color')->nullable();
+            $table->string('total_votes_text')->nullable();
             $table->string('button_color')->nullable();
             $table->string('button_text_color')->nullable();
             $table->string('background_image')->nullable();
             $table->string('logo')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(false);
             $table->string('button_text')->nullable();
             $table->string('results_title')->nullable();
             $table->text('results_summary')->nullable();

@@ -11,6 +11,7 @@ class Poll extends Model
         'title',
         'description',
         'question',
+        'total_votes_text',
         'button_text',
         'results_title',
         'results_summary',

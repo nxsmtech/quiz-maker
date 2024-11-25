@@ -16,6 +16,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
+use Filament\Tables\Actions\ReplicateAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\HtmlString;
@@ -36,9 +38,15 @@ class PollResource extends Resource
                         ->content(function ($record) {
                             $url = route('poll.preview', ['poll' => $record->id]);
                             return new HtmlString(
-                                '<div style="position:relative; width:100%; height:0; padding-bottom:56.25%;">
-                                         <iframe src="' . $url . '" style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allowfullscreen></iframe>
-                                       </div>'
+                                '<div style="position:relative; width:100%;">
+                                        <iframe id="pollIframe" src="' . $url . '" style="width:100%; border:none;" frameborder="0" allowfullscreen></iframe>
+                                   </div>
+                                   <script>
+                                         document.getElementById("pollIframe").onload = function() {
+                                             const iframe = document.getElementById("pollIframe");
+                                             iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
+                                         };
+                                   </script>'
                             );
                         }),
                 ])
@@ -107,6 +115,10 @@ class PollResource extends Resource
                                         ->label('Text Color')
                                         ->nullable(),
 
+                                    TextInput::make('total_votes_text')
+                                        ->label('Total Votes Text')
+                                        ->default('Total votes'),
+
                                     TextInput::make('button_text')
                                         ->label('Button Text')
                                         ->default('Vote Now'),
@@ -132,6 +144,29 @@ class PollResource extends Resource
                                 ])
                                 ->columnSpan('full'), // Make this full width
                         ]),
+                    Tabs\Tab::make('Embed')
+                        ->icon('heroicon-m-code-bracket')
+                        ->schema([
+                            Section::make('Embed code')
+                                ->columns(1)
+                                ->schema([
+                                    Textarea::make('iframe_code')
+                                        ->afterStateHydrated(function (Textarea $component, $record) {
+                                            if ($record) {
+                                                $component->state(
+                                                    '<iframe src="' . route('poll.preview', ['poll' => $record->id]) .
+                                                    '" style="width:100%; height:100%; border:none;" frameborder="0" allowfullscreen></iframe>'
+                                                );
+                                            } else {
+                                                $component->state('No embed code available.');
+                                            }
+                                        })
+                                        ->readOnly()
+                                        ->rows(2)
+                                        ->readOnly(),
+                                ])
+                                ->columnSpan('full'),
+                        ]),
                 ])
                 ->columnSpan('full')
         ]);
@@ -141,7 +176,15 @@ class PollResource extends Resource
     {
         return $table->columns([
             TextColumn::make('title')->sortable()->searchable(),
+            TextColumn::make('question')->sortable()->searchable(),
+            IconColumn::make('is_active')->boolean(),
             TextColumn::make('created_at')->dateTime(),
+        ])->actions([
+            ReplicateAction::make()
+                ->excludeAttributes(['is_active'])
+                ->beforeReplicaSaved(function (Poll $replica): void {
+                    $replica->title = '[NEW] ' . $replica->title;
+                }),
         ]);
     }
 

@@ -5,7 +5,7 @@
     <div class="flex flex gap-3 items-center">
         <h1 class="text-xl font-bold">{{ $poll->title }}</h1>
         @if($poll->logo)
-            <img src="{{ asset('storage/' . $poll->logo) }}" alt="Poll Logo" class="w-6 h-6 object-contain">
+            <img src="{{ asset('storage/' . $poll->logo) }}" alt="poll logo" class="w-6 h-6 object-contain">
         @endif
     </div>
     <p class="mb-2">{{ $poll->description }}</p>
@@ -37,7 +37,7 @@
         </div>
     @endif
     <div class="flex flex-row grid grid-cols-2 items-center gap-4 mt-4">
-        <p class="text-xs font-light">total votes: {{ $totalVotes }}</p>
+        <p class="text-xs font-light">{{ $poll->total_votes_text }}: {{ $totalVotes }}</p>
         @if(!$voted)
             <button wire:click="vote" class="mt-2 px-1 py-1 rounded w-full text-sm font-semibold"
                     style="background-color: {{ $poll->button_color }}; color: {{ $poll->button_text_color }};">
