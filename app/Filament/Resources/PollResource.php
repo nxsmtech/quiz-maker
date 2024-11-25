@@ -100,6 +100,7 @@ class PollResource extends Resource
                                 ->columns(1)
                                 ->schema([
                                     FileUpload::make('logo')
+                                        ->disk('s3')
                                         ->label('Logo')
                                         ->image()
                                         ->directory('polls/logos'),
@@ -109,6 +110,7 @@ class PollResource extends Resource
                                         ->nullable(),
 
                                     FileUpload::make('background_image')
+                                        ->disk('s3')
                                         ->label('Background Image')
                                         ->image()
                                         ->directory('polls/backgrounds'),
