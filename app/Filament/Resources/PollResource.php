@@ -28,6 +28,8 @@ class PollResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
 
+    protected static bool $shouldSkipAuthorization = true;
+
     public static function form(Form $form): Form
     {
         return $form->schema([
