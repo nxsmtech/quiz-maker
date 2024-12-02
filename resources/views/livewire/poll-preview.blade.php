@@ -37,7 +37,8 @@
         </div>
     @endif
     <div class="flex flex-row grid grid-cols-2 items-center gap-4 mt-4">
-        <p class="text-xs font-light">{{ $poll->total_votes_text }}: {{ $totalVotes }}</p>
+{{--        Hidden till option added to filament--}}
+{{--        <p class="text-xs font-light">{{ $poll->total_votes_text }}: {{ $totalVotes }}</p>--}}
         @if(!$voted)
             <button wire:click="vote" class="mt-2 px-1 py-1 rounded w-full text-sm font-semibold"
                     style="background-color: {{ $poll->button_color }}; color: {{ $poll->button_text_color }};">
