@@ -2,11 +2,11 @@
      style="background-image: url('{{ asset('storage/' . $poll->background_image) }}'); background-color: {{ $poll->background_color }}; color: {{ $poll->text_color }};">
 
     {{--    @dd($poll)--}}
-    <div class="flex flex gap-3 items-center">
-        <h1 class="text-xl font-bold">{{ $poll->title }}</h1>
+    <div class="flex flex flex-col gap-3">
         @if($poll->logo)
-            <img src="{{ asset('storage/' . $poll->logo) }}" alt="poll logo" class="w-6 h-6 object-contain">
+            <img src="{{ asset('storage/' . $poll->logo) }}" alt="poll logo" width="127" height="32" class="object-contain">
         @endif
+        <h1 class="text-xl font-bold">{{ $poll->title }}</h1>
     </div>
     <p class="mb-2">{{ $poll->description }}</p>
 
