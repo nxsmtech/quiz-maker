@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filament + Livewire</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        document.cookie = "XSRF-TOKEN=" + encodeURIComponent(document.querySelector('meta[name="csrf-token"]').content);
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
     @livewireStyles <!-- This loads Livewire's styles -->
