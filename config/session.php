@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => env('SESSION_DRIVER', 'file'), // Use 'file' for local and 'database' or 'redis' for production.
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 240),
+    'lifetime' => env('SESSION_LIFETIME', 120),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
@@ -80,9 +80,7 @@ return [
     | Session Database Table
     |--------------------------------------------------------------------------
     |
-    | When using the "database" session driver, you may specify the table to
-    | be used to store sessions. Of course, a sensible default is defined
-    | for you; however, you're welcome to change this to another table.
+    | When using the "database" driver, specify the table for storing sessions.
     |
     */
 
@@ -156,7 +154,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', '.make-me-rich.net'),
+    'domain' => env('SESSION_DOMAIN', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -169,7 +167,7 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE', true),
+    'secure' => env('SESSION_SECURE_COOKIE', false), // Set true in production if using HTTPS.
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +197,7 @@ return [
     |
     */
 
-    'same_site' => env('SESSION_SAME_SITE', 'none'),
+    'same_site' => env('SESSION_SAME_SITE', 'lax'), // Use 'none' for cross-domain iframes.
 
     /*
     |--------------------------------------------------------------------------
@@ -213,5 +211,4 @@ return [
     */
 
     'partitioned' => env('SESSION_PARTITIONED_COOKIE', false),
-
 ];
