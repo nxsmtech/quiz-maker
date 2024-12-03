@@ -5,7 +5,7 @@
         @if($poll->logo)
             <img src="{{ asset('storage/' . $poll->logo) }}" alt="poll logo" width="127" height="32" class="object-contain">
         @endif
-        <h1 class="text-xl font-bold">{{ $poll->title }}</h1>
+{{--        <h1 class="text-xl font-bold">{{ $poll->title }}</h1>--}}
     </div>
     <p class="mb-2">{{ $poll->description }}</p>
 
