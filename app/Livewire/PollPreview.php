@@ -5,7 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Poll;
 use App\Models\PollOption;
-use Illuminate\Support\Facades\Cookie;
 
 class PollPreview extends Component
 {
@@ -15,8 +14,7 @@ class PollPreview extends Component
 
     public function mount()
     {
-        $cookieKey = 'poll_' . $this->poll->id . '_v' . $this->poll->version;
-        $this->voted = Cookie::has($cookieKey);
+        $this->voted = false; // This will check if the user has already voted.
     }
 
     public function selectOption($optionId)
@@ -26,17 +24,10 @@ class PollPreview extends Component
 
     public function vote()
     {
-        if (!$this->voted) {
-            $option = PollOption::find($this->selectedOption);
-
-            if ($option) {
-                $option->increment('votes');
-                $this->voted = true;
-
-                // Set a cookie to prevent revoting
-                $cookieKey = 'poll_' . $this->poll->id . '_v' . $this->poll->version;
-                Cookie::queue(Cookie::make($cookieKey, true, 1440)); // 24 hours
-            }
+        if (!$this->voted && $this->selectedOption) {
+            $option = PollOption::findOrFail($this->selectedOption);
+            $option->increment('votes');
+            $this->voted = true;
         }
     }
 
