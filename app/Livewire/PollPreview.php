@@ -28,11 +28,15 @@ class PollPreview extends Component
     {
         if (!$this->voted) {
             $option = PollOption::find($this->selectedOption);
-            $option->increment('votes');
-            $this->voted = true;
 
-            $cookieKey = 'poll_' . $this->poll->id . '_v' . $this->poll->version;
-            Cookie::queue(Cookie::make($cookieKey, true, 1440)); // 24 hours
+            if ($option) {
+                $option->increment('votes');
+                $this->voted = true;
+
+                // Set a cookie to prevent revoting
+                $cookieKey = 'poll_' . $this->poll->id . '_v' . $this->poll->version;
+                Cookie::queue(Cookie::make($cookieKey, true, 1440)); // 24 hours
+            }
         }
     }
 
