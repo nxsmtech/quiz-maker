@@ -1,5 +1,5 @@
-<div class="p-4 shadow-lg bg-cover bg-top font-montserrat overflow-y-hidden min-h-[300px]"
-     style="background-image: url('{{ asset('storage/' . $poll->background_image) }}'); background-color: {{ $poll->background_color }}; color: {{ $poll->text_color }};"
+<div class="p-4 shadow-lg bg-cover bg-top font-montserrat overflow-y-hidden"
+     style="min-height: 300px; background-image: url('{{ asset('storage/' . $poll->background_image) }}'); background-color: {{ $poll->background_color }}; color: {{ $poll->text_color }};"
      x-data="pollComponent({{ $poll->id }}, {{ $poll->version }})">
     <div class="flex flex-col gap-3 h-full">
         @if($poll->logo)
