@@ -1,11 +1,10 @@
-<div class="p-4 shadow-lg bg-cover bg-top font-montserrat overflow-y-hidden"
+<div class="p-4 shadow-lg bg-cover bg-top font-montserrat overflow-y-hidden min-h-[300px]"
      style="background-image: url('{{ asset('storage/' . $poll->background_image) }}'); background-color: {{ $poll->background_color }}; color: {{ $poll->text_color }};"
      x-data="pollComponent({{ $poll->id }}, {{ $poll->version }})">
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 h-full">
         @if($poll->logo)
             <img src="{{ asset('storage/' . $poll->logo) }}" alt="poll logo" width="127" height="32" class="object-contain">
         @endif
-{{--        <h1 class="text-xl font-bold">{{ $poll->title }}</h1>--}}
     </div>
     <p class="mb-2">{{ $poll->description }}</p>
 
