@@ -14,7 +14,7 @@ class PollPreview extends Component
 
     public function mount()
     {
-        $this->voted = false; // This will check if the user has already voted.
+        $this->voted = false;
     }
 
     public function selectOption($optionId)
@@ -22,10 +22,15 @@ class PollPreview extends Component
         $this->selectedOption = $optionId;
     }
 
-    public function vote()
+    public function refreshPoll()
     {
-        if (!$this->voted && $this->selectedOption) {
-            $option = PollOption::findOrFail($this->selectedOption);
+        $this->poll->load('options'); // Reload related options with updated vote counts
+    }
+
+    public function vote($selectedOption)
+    {
+        if (!$this->voted && $selectedOption) {
+            $option = PollOption::findOrFail($selectedOption);
             $option->increment('votes');
             $this->voted = true;
         }

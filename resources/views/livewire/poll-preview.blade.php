@@ -56,10 +56,11 @@
                     return;
                 }
 
-            @this.call('vote')
+            @this.call('vote', this.selectedOption)
                 .then(() => {
                     this.hasVoted = true;
                     localStorage.setItem(`poll_${pollId}_${pollVersion}`, 'true');
+                    @this.call('refreshPoll');
                 })
                 .catch(() => {
                     alert('Failed to submit your vote.');
