@@ -26,6 +26,7 @@
 
     <template x-if="hasVoted">
         <div>
+            <h2 class="text-md font-bold">{{ $poll->question }}</h2>
             <h3 class="mt-2 text-md font-semibold">{{ $poll->results_title }}</h3>
             <p class="mt-2 text-sm">{{ $poll->results_summary }}</p>
             <div class="space-y-2 mt-2">
