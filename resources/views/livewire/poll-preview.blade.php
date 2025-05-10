@@ -1,5 +1,17 @@
+@php
+    $style = [];
+    if ($poll->background_image) {
+        $style[] = "background-image: url('" . asset('storage/' . $poll->background_image) . "')";
+    }
+    if ($poll->background_color) {
+        $style[] = "background-color: {$poll->background_color}";
+    }
+    if ($poll->text_color) {
+        $style[] = "color: {$poll->text_color}";
+    }
+@endphp
 <div class="p-4 shadow-lg bg-cover bg-top font-montserrat overflow-y-hidden"
-     style="min-height: 300px; background-image: url('{{ asset('storage/' . $poll->background_image) }}'); background-color: {{ $poll->background_color }}; color: {{ $poll->text_color }};"
+     style="{{ implode('; ', $style) }}"
      x-data="pollComponent({{ $poll->id }}, {{ $poll->version }})">
     <div class="flex flex-col gap-3 h-full">
         @if($poll->logo)
@@ -9,7 +21,7 @@
     <p class="mb-2">{{ $poll->description }}</p>
 
     <template x-if="!hasVoted">
-        <div class="grid grid-cols-1 gap-2">
+        <div class="grid grid-cols-1 gap-1">
             <h2 class="text-md font-bold">{{ $poll->question }}</h2>
             @foreach($poll->options as $option)
                 <div>
